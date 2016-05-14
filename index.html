@@ -1,0 +1,221 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<SCRIPT LANGUAGE="JavaScript">
+// function testResults (form) {
+//     var stockOneinput = form.stockChoice.value;
+//     alert ("You typed: " + stockOneinput);
+// }
+</SCRIPT>
+<style type="text/css">
+  #stockTwoDiv{
+    position: relative;
+  }
+</style>
+</head>
+<BODY>
+<form NAME="myform" ACTION="" METHOD="GET">Enter something in the box: <br>
+<input TYPE="text" NAME="stockChoice1" VALUE="">
+<input TYPE="text" NAME="stockChoice2" VALUE="">
+<input TYPE="text" NAME="stockChoice3" VALUE="">
+<input TYPE="button" NAME="button" Value="Click" onClick="getStockPrice(this.form)">
+</form>
+
+<div id="dummyVar">
+  <div id="stockOneHighDiv" style="position:relative;">
+    
+</div>
+<div id="stockOneLowDiv" style="position:relative;">
+    
+</div>
+
+ <div id="stockTwoHighDiv">
+    
+</div>
+<div id="stockTwoLowDiv">
+    
+</div>
+
+
+</div>
+<script>      
+    
+
+  
+  var count = 0;
+  var stockOneHigh = 0;
+  var stockOneLow = 10000000;
+  var stockOneLowWidth = 0;
+
+  var stockTwoHigh = 0;
+  var stockTwoLow = 10000000;
+  var stockTwoLowWidth = 0;
+
+  var stockThreeHigh = 0;
+  var stockThreeLow = 10000000;
+  var stockThreeLowWidth = 0;
+
+
+function getStockPrice(form) {
+
+   var stockOneinput = form.stockChoice1.value;
+   var stockTwoinput = form.stockChoice2.value;
+   var stockThreeinput = form.stockChoice3.value;
+    // alert ("You typed: " + stockOneinput);
+    var req = new XMLHttpRequest();
+
+    req.open('GET',
+'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22'+stockOneinput+'%22%2C%22'+stockTwoinput+'%22%2C%22'+stockThreeinput+'%22)%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json', true);
+    req.onload = function(e) {
+        if (req.readyState == 4 && req.status == 200) {
+            if(req.status == 200) {
+                var response = JSON.parse(req.responseText);
+                //alert("Set breakpoint here");
+                var data0 = [];
+                var mytime = 0;
+                document.getElementsByTagName('main').innerHTML = "";    
+
+                for (i=0; i<response.query.count; i++) {     
+
+                          
+                  // alert(
+                  //    response.query.results.quote[i].Symbol +
+                  //    " - $" +                          
+                  //    response.query.results.quote[i].Bid); 
+                      
+                     
+
+                     document.querySelector('main').innerHTML = 
+                        "<div id=\"yahoo\">" + response.query.created + " **** " +
+                          response.query.results.quote[0].Symbol +
+                         " - $" +   
+
+                         response.query.results.quote[0].Bid + "</div>" +
+                         "<div id=\"stockTwoHighDiv\">"+
+                          "</div>"+ "<div id=\"stockTwoLowDiv\">"+
+                          "</div>" +
+                          "<div id=\"apple\">"+ response.query.created + "**** " +
+                        
+                         response.query.results.quote[1].Symbol +
+                         " - $" +                        
+                         response.query.results.quote[1].Bid +  "</div>"+ 
+
+                         "<div id=\"microsoft\">" + response.query.created + "**** " +
+                          
+                         response.query.results.quote[2].Symbol +
+                         " - $" +                          
+                         response.query.results.quote[2].Bid + "</div>" ;
+                         // document.querySelector('main').innerHTML ;
+                        
+                      data0 = response.query.results.quote[0].Bid;
+                      data1 = response.query.results.quote[1].Bid;
+                      data2 = response.query.results.quote[2].Bid;
+                      document.getElementById('yahoo').style.width = data0+"%";
+                       document.getElementById('yahoo').style.height = '50px';
+                      document.getElementById('yahoo').style.backgroundColor = 'red';
+                      document.getElementById('apple').style.width = data1+"%";
+                       document.getElementById('apple').style.height = '50px';
+                      document.getElementById('apple').style.backgroundColor = 'blue';
+
+                      document.getElementById('microsoft').style.width = data2+"%";
+                      // document.getElementById('microsoft').style.marginTop = 5+"%";
+                       document.getElementById('microsoft').style.height = '50px';
+                      document.getElementById('microsoft').style.backgroundColor = 'green';
+                      if (response.query.results.quote[0].Bid > stockOneHigh){
+                        stockOneHigh = response.query.results.quote[0].Bid;
+                         document.getElementById("stockOneHighDiv").style.marginLeft = data0+"%";
+                        document.getElementById("stockOneHighDiv").textContent = "* H: " + stockOneHigh;
+                      }
+                       if (response.query.results.quote[0].Bid < stockOneLow){
+                        stockOneLow = response.query.results.quote[0].Bid;
+                        stockOneLowWidth = data0;
+                        document.getElementById("stockOneLowDiv").style.marginLeft = stockOneLowWidth+"%";
+                        document.getElementById("stockOneLowDiv").textContent = "* L: " +stockOneLow;
+                      }
+
+                      if (response.query.results.quote[1].Bid > stockTwoHigh){
+                        stockTwoHigh = response.query.results.quote[1].Bid;
+                         document.getElementById("stockTwoHighDiv").style.marginLeft = stockTwoHigh+"%";
+                        document.getElementById("stockTwoHighDiv").textContent = "* H: " + stockTwoHigh;
+                      }
+                       if (response.query.results.quote[1].Bid < stockTwoLow){
+                        stockTwoLow = response.query.results.quote[1].Bid;
+                        stockOneTwoWidth = data1;
+                        document.getElementById("stockTwoLowDiv").style.marginLeft = stockTwoLow+"%";
+                        document.getElementById("stockTwoLowDiv").textContent = "* L: " +stockTwoLow;
+                      }
+
+                       if (response.query.results.quote[2].Bid > stockThreeHigh){
+                        stockThreeHigh = response.query.results.quote[2].Bid;
+                         document.getElementById("stockThreeHighDiv").style.marginLeft = stockThreeHigh+"%";
+                        document.getElementById("stockThreeHighDiv").textContent = "* H: " + stockThreeHigh;
+                      }
+                       if (response.query.results.quote[2].Bid < stockThreeLow){
+                        stockThreeLow = response.query.results.quote[2].Bid;
+                       
+                        document.getElementById("stockThreeLowDiv").style.marginLeft = stockThreeLow+"%";
+                        document.getElementById("stockThreeLowDiv").textContent = "* L: " +stockThreeLow;
+                      }
+
+
+
+                       
+//         
+
+                }
+            } else {
+                console.log("Error");
+            }
+        }
+    }
+    // var timer = setInterval(function(){ getStockPrice(form); }, 5000);
+    req.send(null);
+}
+
+
+// var x = [];
+// for (var i = 0; i < 500; i ++) {
+//   x[i] = Math.random();
+// }
+
+
+// Plotly.newPlot('myDiv', data);
+  // if (count == 0){
+  //   count++;
+  //   var timer = setInterval(getStockPrice, 1000);
+    
+  // }
+  // else{
+
+
+  // document.getElementById('yahoo').style.width = data0;
+  // document.getElementById('yahoo').style.backgroundColor = "red";
+    </script>
+
+     
+        
+        <main>
+          
+        </main>
+        
+        </div>
+        <div id="myMain"></div>
+        <div id="stockTwoHighDiv" style="position:relative;">
+    
+
+        </div>
+        <div id="stockTwoLowDiv" style="position:relative;">
+    
+
+        </div>
+
+    
+
+        <div id="stockThreeHighDiv" style="position:relative;">
+  
+      </div>
+      <div id="stockThreeLowDiv" style="position:relative;">
+    
+      </div>
+  
+</html>

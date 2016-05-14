@@ -1,0 +1,50 @@
+<html>
+<script>      
+    
+  
+    
+function getStockPrice() {
+    var req = new XMLHttpRequest();
+    req.open('GET',
+'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22YHOO%22%2C%22AAPL%22)%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json', true);
+    req.onload = function(e) {
+        if (req.readyState == 4 && req.status == 200) {
+            if(req.status == 200) {
+                var response = JSON.parse(req.responseText);
+                //alert("Set breakpoint here");
+                for (i=0; i<response.query.count; i++) {                      
+                  // alert(
+                  //    response.query.results.quote[i].Symbol +
+                  //    " - $" +                          
+                  //    response.query.results.quote[i].Bid); 
+                      
+                     
+                     document.querySelector('main').innerHTML = 
+                          response.query.created + " **** " +
+                          response.query.results.quote[i].Symbol +
+                         " - $" +                          
+                         response.query.results.quote[i].Bid + "<br>" +
+                         document.querySelector('main').innerHTML ;
+                  
+                } 
+                document.querySelector('main').innerHTML = "<br>" + document.querySelector('main').innerHTML;
+               
+            } else {
+                console.log("Error");
+            }
+        }
+    }
+    req.send(null);
+}
+
+  var timer = setInterval(getStockPrice, 1000);
+    </script>
+        <body >
+        
+        <main>
+        
+        
+        </main>
+        
+        </body>
+</html>

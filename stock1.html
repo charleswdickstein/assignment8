@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Stock AJAX</title>
+  
+ 
+ <script>
+  function updateQuotes(data) {
+   for (ticker in quote) {
+    var symbol = quote[ticker];
+    
+    var curdate = new Date(null);
+    
+    curdate.setTime(symbol['TradeTime']*1000);
+    var printdate = curdate.toLocaleString();
+    
+    
+    document.write('<div>Price of ' + ticker + ' is ' + symbol['Last'] + 
+           ' and the trade time is ' + symbol['TradeTime'] + 
+           '  ' + printdate + '</div>');
+           
+           
+    var curdate = new Date(null);
+    curdate.setTime(symbol['TradeTime']*1000);
+     
+   } // end for ticker
+   document.write('************');
+  } // end updateQuote
+ </script>
+ 
+ </head> 
+ <body>
+ 
+ <script src="http://feeds.financialcontent.com/JSQuote?Ticker=YHOO+AAPL+MSFT"></script>
+ 
+ </body>
+ 
+ </html>
