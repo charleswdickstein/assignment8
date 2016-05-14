@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>class_stock_quotes.html</title>
+	
+	<script>
+	
+	function getStockPrice(){
+	
+	 var req = new XMLHttpRequest();
+	 req.open('GET', 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22YHOO%22%2C%22AAPL%22)%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json', true);
+	 
+	 if (req.readyState == 4 && req.status == 200) {
+	 	if(req.status == 200) {
+	 		var response = JSON.parse(req.responseText);
+	 		
+	 		for (i=0; i<response.query.count; i++) {
+	 			document.querySelector('main').innerHTML =
+	 			   response.query.created + " ***** " +
+	 			   response.query.results.quote[i].Symbol + " - $ " +
+	 			   response.query.results.quote[i].Bid +
+	 			   "<br>" ;
+	 		
+	 		} // end for i
+	 	
+	 	
+	 	}  // if status	
+	 
+	 
+	 
+	 
+	 
+	 }  // if readyState
+	
+	
+	
+	
+	req.send(null);
+	
+	}// end function getStockPrice()
+	
+	var timer = setInterval(getStockPrice, 1000);
+	
+	
+	
+	</script>
+</head>
+<body>
+
+<main>
+</main>
+
+</body>
+</html>
