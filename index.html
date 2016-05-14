@@ -1,3 +1,8 @@
+<!-- Charles Dickstein
+May 13, 2016 
+This program allows the user to input 3 stocks  and 
+get their quotes back along with a visual representation of their values
+-->
 <html>
 <head>
 <style type="text/css">
@@ -7,12 +12,16 @@
 </style>
 </head>
 <body>
+<!-- Form to input stock quotes -->
 <form name="myform" action="" method="GET">Stock Picker <br>
 Stock One: <input type="text" name="stockChoice1" value="">
 Stock Two: <input type="text" name="stockChoice2" value="">
 Stock Three: <input type="text" name="stockChoice3" value="">
 <input type="button" name="button" value="Submit" onClick="getStockPrice(this.form)">
 </form>
+
+
+<!-- Displays Stocks One and Two -->
 
 <div id="dummyVar">
   <div id="stockOneHighDiv" style="position:relative;">
@@ -33,7 +42,7 @@ Stock Three: <input type="text" name="stockChoice3" value="">
 </div>
 <script>      
     
-
+// Sets variables to determine the minimum and maximum values for each stock
   
   var count = 0;
   var stockOneHigh = 0;
@@ -63,9 +72,10 @@ function getStockPrice(form) {
         if (req.readyState == 4 && req.status == 200) {
             if(req.status == 200) {
                 var response = JSON.parse(req.responseText);
-                //alert("Set breakpoint here");
+               
                 var data0 = [];
                 var mytime = 0;
+                // resets main to blank text every call so elements isn't appended
                 document.getElementsByTagName('main').innerHTML = "";    
 
                 for (i=0; i<response.query.count; i++) {     
@@ -75,7 +85,7 @@ function getStockPrice(form) {
                      
 
                      document.querySelector('main').innerHTML = 
-                        "<div id=\"yahoo\">" + response.query.created + " **** " +
+                        "<div id=\"barOne\">" + response.query.created + " **** " +
                           response.query.results.quote[0].Symbol +
                          " - $" +   
 
@@ -83,13 +93,13 @@ function getStockPrice(form) {
                          "<div id=\"stockTwoHighDiv\">"+
                           "</div>"+ "<div id=\"stockTwoLowDiv\">"+
                           "</div>" +
-                          "<div id=\"apple\">"+ response.query.created + "**** " +
+                          "<div id=\"barTwo\">"+ response.query.created + "**** " +
                         
                          response.query.results.quote[1].Symbol +
                          " - $" +                        
                          response.query.results.quote[1].Bid +  "</div>"+ 
 
-                         "<div id=\"microsoft\">" + response.query.created + "**** " +
+                         "<div id=\"barThree\">" + response.query.created + "**** " +
                           
                          response.query.results.quote[2].Symbol +
                          " - $" +                          
@@ -99,17 +109,17 @@ function getStockPrice(form) {
                       data0 = response.query.results.quote[0].Bid;
                       data1 = response.query.results.quote[1].Bid;
                       data2 = response.query.results.quote[2].Bid;
-                      document.getElementById('yahoo').style.width = data0+"%";
-                       document.getElementById('yahoo').style.height = '50px';
-                      document.getElementById('yahoo').style.backgroundColor = 'red';
-                      document.getElementById('apple').style.width = data1+"%";
-                       document.getElementById('apple').style.height = '50px';
-                      document.getElementById('apple').style.backgroundColor = 'blue';
+                      document.getElementById('barOne').style.width = data0+"%";
+                       document.getElementById('barOne').style.height = '50px';
+                      document.getElementById('barOne').style.backgroundColor = 'red';
+                      document.getElementById('barTwo').style.width = data1+"%";
+                       document.getElementById('barTwo').style.height = '50px';
+                      document.getElementById('barTwo').style.backgroundColor = 'blue';
 
-                      document.getElementById('microsoft').style.width = data2+"%";
+                      document.getElementById('barThree').style.width = data2+"%";
                       // document.getElementById('microsoft').style.marginTop = 5+"%";
-                       document.getElementById('microsoft').style.height = '50px';
-                      document.getElementById('microsoft').style.backgroundColor = 'green';
+                       document.getElementById('barThree').style.height = '50px';
+                      document.getElementById('barThree').style.backgroundColor = 'green';
                       if (response.query.results.quote[0].Bid > stockOneHigh){
                         stockOneHigh = response.query.results.quote[0].Bid;
                          document.getElementById("stockOneHighDiv").style.marginLeft = data0+"%";
@@ -157,6 +167,7 @@ function getStockPrice(form) {
             }
         }
     }
+    // Updates stock quotes every ten seconds
     var timer = setInterval(function(){ getStockPrice(form); }, 10000);
     req.send(null);
 }
