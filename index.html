@@ -113,37 +113,37 @@ function getStockPrice(form) {
                       if (response.query.results.quote[0].Bid > stockOneHigh){
                         stockOneHigh = response.query.results.quote[0].Bid;
                          document.getElementById("stockOneHighDiv").style.marginLeft = data0+"%";
-                        document.getElementById("stockOneHighDiv").textContent = "* H: " + stockOneHigh;
+                        document.getElementById("stockOneHighDiv").textContent = "* Stock1 H: " + stockOneHigh;
                       }
                        if (response.query.results.quote[0].Bid < stockOneLow){
                         stockOneLow = response.query.results.quote[0].Bid;
                         stockOneLowWidth = data0;
                         document.getElementById("stockOneLowDiv").style.marginLeft = stockOneLowWidth+"%";
-                        document.getElementById("stockOneLowDiv").textContent = "* L: " +stockOneLow;
+                        document.getElementById("stockOneLowDiv").textContent = "* Stock1 L: " +stockOneLow;
                       }
 
                       if (response.query.results.quote[1].Bid > stockTwoHigh){
                         stockTwoHigh = response.query.results.quote[1].Bid;
                          document.getElementById("stockTwoHighDiv").style.marginLeft = stockTwoHigh+"%";
-                        document.getElementById("stockTwoHighDiv").textContent = "* H: " + stockTwoHigh;
+                        document.getElementById("stockTwoHighDiv").textContent = "* Stock2 H: " + stockTwoHigh;
                       }
                        if (response.query.results.quote[1].Bid < stockTwoLow){
                         stockTwoLow = response.query.results.quote[1].Bid;
                         stockOneTwoWidth = data1;
                         document.getElementById("stockTwoLowDiv").style.marginLeft = stockTwoLow+"%";
-                        document.getElementById("stockTwoLowDiv").textContent = "* L: " +stockTwoLow;
+                        document.getElementById("stockTwoLowDiv").textContent = "* Stock2 L: " +stockTwoLow;
                       }
 
                        if (response.query.results.quote[2].Bid > stockThreeHigh){
                         stockThreeHigh = response.query.results.quote[2].Bid;
                          document.getElementById("stockThreeHighDiv").style.marginLeft = stockThreeHigh+"%";
-                        document.getElementById("stockThreeHighDiv").textContent = "* H: " + stockThreeHigh;
+                        document.getElementById("stockThreeHighDiv").textContent = "* Stock 3 H: " + stockThreeHigh;
                       }
                        if (response.query.results.quote[2].Bid < stockThreeLow){
                         stockThreeLow = response.query.results.quote[2].Bid;
                        
                         document.getElementById("stockThreeLowDiv").style.marginLeft = stockThreeLow+"%";
-                        document.getElementById("stockThreeLowDiv").textContent = "* L: " +stockThreeLow;
+                        document.getElementById("stockThreeLowDiv").textContent = "* Stock 3 L: " +stockThreeLow;
                       }
 
 
@@ -201,7 +201,7 @@ function getStockPrice(form) {
     
 
         <div id="stockThreeHighDiv" style="position:relative;">
-  
+      
       </div>
       <div id="stockThreeLowDiv" style="position:relative;">
     
