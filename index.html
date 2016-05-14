@@ -1,24 +1,17 @@
 <html>
 <head>
-  <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<SCRIPT LANGUAGE="JavaScript">
-// function testResults (form) {
-//     var stockOneinput = form.stockChoice.value;
-//     alert ("You typed: " + stockOneinput);
-// }
-</SCRIPT>
 <style type="text/css">
   #stockTwoDiv{
     position: relative;
   }
 </style>
 </head>
-<BODY>
-<form NAME="myform" ACTION="" METHOD="GET">Enter something in the box: <br>
-<input TYPE="text" NAME="stockChoice1" VALUE="">
-<input TYPE="text" NAME="stockChoice2" VALUE="">
-<input TYPE="text" NAME="stockChoice3" VALUE="">
-<input TYPE="button" NAME="button" Value="Click" onClick="getStockPrice(this.form)">
+<body>
+<form name="myform" action="" method="GET">Stock Picker <br>
+Stock One: <input type="text" name="stockChoice1" value="">
+Stock Two: <input type="text" name="stockChoice2" value="">
+Stock Three: <input type="text" name="stockChoice3" value="">
+<input type="button" name="button" value="Submit" onClick="getStockPrice(this.form)">
 </form>
 
 <div id="dummyVar">
@@ -78,11 +71,7 @@ function getStockPrice(form) {
                 for (i=0; i<response.query.count; i++) {     
 
                           
-                  // alert(
-                  //    response.query.results.quote[i].Symbol +
-                  //    " - $" +                          
-                  //    response.query.results.quote[i].Bid); 
-                      
+                 
                      
 
                      document.querySelector('main').innerHTML = 
@@ -168,7 +157,7 @@ function getStockPrice(form) {
             }
         }
     }
-    // var timer = setInterval(function(){ getStockPrice(form); }, 5000);
+    var timer = setInterval(function(){ getStockPrice(form); }, 10000);
     req.send(null);
 }
 
